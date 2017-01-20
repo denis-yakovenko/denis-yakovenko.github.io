@@ -1,10 +1,164 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<title>Норвегия, май 2014</title>
 	</head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<style>
+.collageYoutube
+{
+    cursor: pointer;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+/*var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var player;*/
+/*
+function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+      height: '360',
+      width: '640',
+      videoId: 'M7lc1UVf-VE',
+      events: {
+        'onReady': function(){player.playVideo(); player.mute();}
+      }
+    });
+  }
+  */
+ /* 
+function playThis(elem) {
+console.log(elem);
+    player = new YT.Player(elem.attr('id'), {
+      height: '270',
+      width: '480',
+      videoId: elem.attr('id'),
+      events: {
+        'onReady': function(){player.playVideo();}
+      }
+    });
+}
+function pauseThis(elem) {
+    if (player!=undefined) player.pauseVideo();
+}
+$(window).scroll(function() {
+	clearTimeout($.data(this, 'scrollTimer'));
+	$.data(this, 'scrollTimer', setTimeout(function() {
+		// do something
+		isScrolledIntoView();
+	}, 500));
+});
+function isScrolledIntoView()
+      {
+		$('.collageYoutube').each(function(){
+			var docViewTop = $(window).scrollTop();
+			var docViewBottom = docViewTop + $(window).height();
+			var elemTop = $(this).offset().top;
+			var elemBottom = elemTop + $(this).height();
+			if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
+			{
+				playThis($(this));
+			}else{
+				pauseThis($(this));
+			}
+		});
+	}*/
+var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var currentlyPlaying;
+var playing = false;
+var paused = false;
+
+var myMap = new Object();
+
+
+
+function loadPlayer(elem) {
+    var player = new YT.Player(elem.attr('id'), {
+      height: '360',
+      width: '480',
+      videoId: elem.attr('id'),
+      events: {
+        'onReady': function(){
+			player.playVideo();
+			myMap[elem.attr('id')]=player;
+		}
+      }
+    });
+}
+
+
+
+function onYouTubeIframeAPIReady() {
+currentlyPlaying = new YT.Player(currentlyPlaying, {
+height: '270',
+      width: '480',
+	  videoId: currentlyPlaying/*,
+events: {
+'onReady': onPlayerReady
+}*/
+});
+}
+/*
+function onPlayerReady(event) {
+event.target.playVideo();
+}
+*/
+$(window).scroll(function() {
+clearTimeout($.data(this, 'scrollTimer'));
+$.data(this, 'scrollTimer', setTimeout(function() {
+isScrolledIntoView();
+}, 250));
+});
+
+
+
+
+
+function isScrolledIntoView() {
+	$('.collageYoutube').each(function() {
+		var docViewTop = $(window).scrollTop();
+		var docViewBottom = docViewTop + $(window).height();
+		var elemTop = $(this).offset().top;
+		var elemBottom = elemTop + $(this).height();
+		
+		
+		console.log(
+		" elemTop "+elemTop+
+		" elemBottom "+elemBottom+
+		" docViewTop "+docViewTop+
+		" docViewBottom "+docViewBottom+
+		""
+		);
+		
+		
+		
+		
+		if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop)){
+			//if ( paused == true ){currentlyPlaying.playVideo();paused = false; return;}
+			//currentlyPlaying = $(this).attr('id');
+			console.log("id: "+$(this).attr('id')+" className: "+$(this).className);
+			if(myMap[$(this).attr('id')]==undefined)
+			loadPlayer($(this));
+			else
+			myMap[$(this).attr('id')].playVideo();
+			//$(this).removeClass("collageYoutube");
+			//onYouTubeIframeAPIReady();
+			//playing = true;
+		}
+		else {
+			if(myMap[$(this).attr('id')]!=undefined)
+				myMap[$(this).attr('id')].pauseVideo();
+		}
+	});
+}
+</script>
 	<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
 		<center>
 		<h1 style="text-align:center">Норвегия, май 2014</h1>
@@ -104,23 +258,23 @@
 <a href='https://postimg.org/image/3tx03v575/' target='_blank'><img src='https://s16.postimg.org/3tx03v575/2014_05_15_11_45_21_110.jpg' border='0' alt="2014 05 15 11 45 21 110" /></a> 
 <a href='https://postimg.org/image/p4uk84nbl/' target='_blank'><img src='https://s16.postimg.org/p4uk84nbl/2014_05_15_11_45_44_113.jpg' border='0' alt="2014 05 15 11 45 44 113" /></a> 
 <a href='https://postimg.org/image/qy22a6xw1/' target='_blank'><img src='https://s16.postimg.org/qy22a6xw1/2014_05_15_11_52_52_118.jpg' border='0' alt="2014 05 15 11 52 52 118" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/zWi91u2N7Dw" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="zWi91u2N7Dw" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/zWi91u2N7Dw/0.jpg"></div></p>
 <a href='https://postimg.org/image/505lgeivl/' target='_blank'><img src='https://s16.postimg.org/505lgeivl/2014_05_15_12_21_48_125.jpg' border='0' alt="2014 05 15 12 21 48 125" /></a> 
 <a href='https://postimg.org/image/hstpgbuhd/' target='_blank'><img src='https://s16.postimg.org/hstpgbuhd/2014_05_15_12_28_52_126.jpg' border='0' alt="2014 05 15 12 28 52 126" /></a> 
 <a href='https://postimg.org/image/6uify55w1/' target='_blank'><img src='https://s16.postimg.org/6uify55w1/2014_05_15_12_32_30_128.jpg' border='0' alt="2014 05 15 12 32 30 128" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/qgEd5eQEVRo" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="qgEd5eQEVRo" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/qgEd5eQEVRo/0.jpg"></div></p>
 <a href='https://postimg.org/image/cwq2omuc1/' target='_blank'><img src='https://s16.postimg.org/cwq2omuc1/2014_05_15_13_36_36_143.jpg' border='0' alt="2014 05 15 13 36 36 143" /></a> 
 <a href='https://postimg.org/image/iyxpf4is1/' target='_blank'><img src='https://s16.postimg.org/iyxpf4is1/2014_05_15_13_57_00_148.jpg' border='0' alt="2014 05 15 13 57 00 148" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/b5dmsDIpEKo" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="b5dmsDIpEKo" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/b5dmsDIpEKo/0.jpg"></div></p>
 <a href='https://postimg.org/image/q5zeaztox/' target='_blank'><img src='https://s16.postimg.org/q5zeaztox/2014_05_15_14_00_42_158.jpg' border='0' alt="2014 05 15 14 00 42 158" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/73iacxwLyhw" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="73iacxwLyhw" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/73iacxwLyhw/0.jpg"></div></p>
 <a href='https://postimg.org/image/qg6wuc8b5/' target='_blank'><img src='https://s16.postimg.org/qg6wuc8b5/2014_05_15_14_03_16_162.jpg' border='0' alt="2014 05 15 14 03 16 162" /></a> 
 <a href='https://postimg.org/image/k3rrki58x/' target='_blank'><img src='https://s16.postimg.org/k3rrki58x/2014_05_15_15_10_11_168.jpg' border='0' alt="2014 05 15 15 10 11 168" /></a> 
 <a href='https://postimg.org/image/5zvwc3y1d/' target='_blank'><img src='https://s16.postimg.org/5zvwc3y1d/2014_05_15_15_31_09_169.jpg' border='0' alt="2014 05 15 15 31 09 169" /></a> 
 <a href='https://postimg.org/image/hrod0ni1d/' target='_blank'><img src='https://s16.postimg.org/hrod0ni1d/2014_05_15_15_48_33_179.jpg' border='0' alt="2014 05 15 15 48 33 179" /></a> 
 <a href='https://postimg.org/image/u5177k7pt/' target='_blank'><img src='https://s16.postimg.org/u5177k7pt/2014_05_15_15_50_18_180.jpg' border='0' alt="2014 05 15 15 50 18 180" /></a> 
 <a href='https://postimg.org/image/3z9y50r9t/' target='_blank'><img src='https://s16.postimg.org/3z9y50r9t/2014_05_15_15_53_08_187.jpg' border='0' alt="2014 05 15 15 53 08 187" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/dzBIMJE0zCQ" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="dzBIMJE0zCQ" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/dzBIMJE0zCQ/0.jpg"></div></p>
 <p>Наконец-то мы в Норвегии! Стране викингов, троллей, фьордов и водопадов! Сразу рванули в сторону «висячего камня», но проехав километров 100, наткнулись на закрытый из-за обильного снега перевал. Пришлось возвращаться назад и ехать другой дорогой.</p>
 <a href='https://postimg.org/image/rervadb0x/' target='_blank'><img src='https://s16.postimg.org/rervadb0x/2014_05_15_16_21_24_194.jpg' border='0' alt="2014 05 15 16 21 24 194" /></a> 
 <a href='https://postimg.org/image/rg1t3scup/' target='_blank'><img src='https://s16.postimg.org/rg1t3scup/2014_05_15_16_33_20_201.jpg' border='0' alt="2014 05 15 16 33 20 201" /></a> 
@@ -158,7 +312,7 @@
 <p>Там проехали красивый мост и тоннель, нашли нужный нам причал и расписание. Паром до нужного нам городка Лисботн, находящегося в самом конце Люсе-фьорда, ожидался через пару часов, местные это подтвердили, и мы решили ждать. Купили хлопья, шоколадку, сок, и два часа ожидания прошли незаметно.</p>
 <a href='https://postimg.org/image/hjlp5ib2n/' target='_blank'><img src='https://s27.postimg.org/hjlp5ib2n/2014_05_16_12_24_14_290.jpg' border='0' alt="2014 05 16 12 24 14 290" /></a> 
 <a href='https://postimg.org/image/6zbrmx6kv/' target='_blank'><img src='https://s27.postimg.org/6zbrmx6kv/2014_05_16_12_36_32_291.jpg' border='0' alt="2014 05 16 12 36 32 291" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/iDaZ_Zw7aDY" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="iDaZ_Zw7aDY" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/iDaZ_Zw7aDY/0.jpg"></div></p>
 <a href='https://postimg.org/image/v5mey1spb/' target='_blank'><img src='https://s27.postimg.org/v5mey1spb/2014_05_16_13_03_56_296.jpg' border='0' alt="2014 05 16 13 03 56 296" /></a> 
 <a href='https://postimg.org/image/lwk8nxjtb/' target='_blank'><img src='https://s27.postimg.org/lwk8nxjtb/2014_05_16_13_06_32_297.jpg' border='0' alt="2014 05 16 13 06 32 297" /></a> 
 <a href='https://postimg.org/image/eqshlhaq7/' target='_blank'><img src='https://s27.postimg.org/eqshlhaq7/2014_05_16_13_43_45_302.jpg' border='0' alt="2014 05 16 13 43 45 302" /></a> 
@@ -181,7 +335,7 @@
 <a href='https://postimg.org/image/oabtpstxr/' target='_blank'><img src='https://s27.postimg.org/oabtpstxr/2014_05_16_15_57_37_341.jpg' border='0' alt="2014 05 16 15 57 37 341" /></a> 
 <a href='https://postimg.org/image/kcok0e74f/' target='_blank'><img src='https://s27.postimg.org/kcok0e74f/2014_05_16_16_03_42_346.jpg' border='0' alt="2014 05 16 16 03 42 346" /></a> 
 <p>Прибыли в Лисботн, и поехали по серпантину с тоннелем к месту старта пешеходного маршрута к «висячему камню».</p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/BaxGXebUGoM" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="BaxGXebUGoM" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/BaxGXebUGoM/0.jpg"></div></p>
 <p>Оставили мотоцикл и пошли, снег, ноги мокрые, по описанию 5 часов туда-обратно, в итоге у нас примерно так и вышло.</p>
 <a href='https://postimg.org/image/iao2m595b/' target='_blank'><img src='https://s27.postimg.org/iao2m595b/2014_05_16_16_39_35_350.jpg' border='0' alt="2014 05 16 16 39 35 350" /></a> 
 <a href='https://postimg.org/image/hmf837afj/' target='_blank'><img src='https://s27.postimg.org/hmf837afj/2014_05_16_17_01_08_352.jpg' border='0' alt="2014 05 16 17 01 08 352" /></a> 
@@ -212,10 +366,10 @@
 <a href='https://postimg.org/image/ewjob8hvz/' target='_blank'><img src='https://s27.postimg.org/ewjob8hvz/2014_05_16_22_19_20_414.jpg' border='0' alt="2014 05 16 22 19 20 414" /></a> 
 <a href='https://postimg.org/image/89x0i207j/' target='_blank'><img src='https://s27.postimg.org/89x0i207j/2014_05_16_22_20_43_415.jpg' border='0' alt="2014 05 16 22 20 43 415" /></a> 
 <a href='https://postimg.org/image/5tv747i4v/' target='_blank'><img src='https://s27.postimg.org/5tv747i4v/2014_05_16_22_26_18_416.jpg' border='0' alt="2014 05 16 22 26 18 416" /></a>  
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/kIjyGqJi8cY" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="kIjyGqJi8cY" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/kIjyGqJi8cY/0.jpg"></div></p>
 <h2>17 мая</h2>
 <p>Встали в 5:40, собрались, подъезжаем к причалу, а парома нет.</p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/e1PXoT_Z6LI" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="e1PXoT_Z6LI" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/e1PXoT_Z6LI/0.jpg"></div></p>
 <p>Местный дяденька с радостью сообщает нам, что сегодня, во-первых суббота, а во-вторых какой-то общенациональный праздник, и парома сегодня не будет, ближайший будет завтра аж в 14:45. Ну что же, не вопрос, обойдемся без парома, поедем в объезд, по уже частично знакомой нам дороге через перевал, хотя это лишние 100 километров. Зато проехали по снежной дороге, увидели многометровые сугробы, оставшиеся после уборки снега и расчистки дороги.</p>
 <a href='https://postimg.org/image/iiaz7q9hl/' target='_blank'><img src='https://s12.postimg.org/iiaz7q9hl/2014_05_17_10_12_55_419.jpg' border='0' alt="2014 05 17 10 12 55 419" /></a> 
 <a href='https://postimg.org/image/3wjyjhcp5/' target='_blank'><img src='https://s12.postimg.org/3wjyjhcp5/2014_05_17_10_13_07_420.jpg' border='0' alt="2014 05 17 10 13 07 420" /></a> 
@@ -285,7 +439,7 @@
 <a href='https://postimg.org/image/i9flppt2h/' target='_blank'><img src='https://s28.postimg.org/i9flppt2h/2014_05_18_15_41_11_565.jpg' border='0' alt="2014 05 18 15 41 11 565" /></a> 
 <a href='https://postimg.org/image/er3ltbs6h/' target='_blank'><img src='https://s28.postimg.org/er3ltbs6h/2014_05_18_15_43_05_568.jpg' border='0' alt="2014 05 18 15 43 05 568" /></a> 
 <a href='https://postimg.org/image/726rhlrop/' target='_blank'><img src='https://s28.postimg.org/726rhlrop/2014_05_18_15_44_18_569.jpg' border='0' alt="2014 05 18 15 44 18 569" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/H7wvzlsvMfA" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="H7wvzlsvMfA" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/H7wvzlsvMfA/0.jpg"></div></p>
 <a href='https://postimg.org/image/tsahoc0a1/' target='_blank'><img src='https://s28.postimg.org/tsahoc0a1/2014_05_18_15_49_09_574.jpg' border='0' alt="2014 05 18 15 49 09 574" /></a> 
 <a href='https://postimg.org/image/etnhg5vu1/' target='_blank'><img src='https://s28.postimg.org/etnhg5vu1/2014_05_18_16_45_08_577.jpg' border='0' alt="2014 05 18 16 45 08 577" /></a> 
 <a href='https://postimg.org/image/j6qmcbtyh/' target='_blank'><img src='https://s28.postimg.org/j6qmcbtyh/2014_05_18_16_49_44_578.jpg' border='0' alt="2014 05 18 16 49 44 578" /></a> 
@@ -331,7 +485,7 @@
 <p><a target="_blank" href="https://media.giphy.com/media/3osxYgKRoIRRIlGg24/giphy.gif"><img src="https://media.giphy.com/media/3osxYwmqD14E03xGhi/giphy.gif" ></a></p>
 <a href='https://postimg.org/image/kigaqilx9/' target='_blank'><img src='https://s22.postimg.org/kigaqilx9/2014_05_19_15_49_14_799.jpg' border='0' alt="2014 05 19 15 49 14 799" /></a> 
 <a href='https://postimg.org/image/o60nabji5/' target='_blank'><img src='https://s22.postimg.org/o60nabji5/2014_05_19_15_50_34_824.jpg' border='0' alt="2014 05 19 15 50 34 824" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/Q2W-7bgH0yo" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="Q2W-7bgH0yo" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/Q2W-7bgH0yo/0.jpg"></div></p>
 <p>И двинули обратно. По пути встречали парочки людей, идущих к «языку». Видимо это именно те, кто разбивает это поход на два дня. Но у нас нет столько времени, поэтому мы туда и обратно за 11 часов протопали по снегу 20 километров и 2 километра по ступенькам.</p>
 <a href='https://postimg.org/image/ra6ptdawt/' target='_blank'><img src='https://s22.postimg.org/ra6ptdawt/2014_05_19_16_38_32_841.jpg' border='0' alt="2014 05 19 16 38 32 841" /></a> 
 <a href='https://postimg.org/image/3xd9olk71/' target='_blank'><img src='https://s22.postimg.org/3xd9olk71/2014_05_19_16_41_48_844.jpg' border='0' alt="2014 05 19 16 41 48 844" /></a> 
@@ -358,7 +512,7 @@
 <a href='https://postimg.org/image/kw4wlrgj5/' target='_blank'><img src='https://s24.postimg.org/kw4wlrgj5/2014_05_20_11_56_32_875.jpg' border='0' alt="2014 05 20 11 56 32 875" /></a> 
 <a href='https://postimg.org/image/aejg3r52p/' target='_blank'><img src='https://s24.postimg.org/aejg3r52p/2014_05_20_12_04_14_877.jpg' border='0' alt="2014 05 20 12 04 14 877" /></a> 
 <a href='https://postimg.org/image/x0orghisx/' target='_blank'><img src='https://s24.postimg.org/x0orghisx/2014_05_20_13_02_39_879.jpg' border='0' alt="2014 05 20 13 02 39 879" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/oUkji8uBq6o" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="oUkji8uBq6o" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/oUkji8uBq6o/0.jpg"></div></p>
 <a href='https://postimg.org/image/dwvg055yp/' target='_blank'><img src='https://s24.postimg.org/dwvg055yp/2014_05_20_13_27_27_884.jpg' border='0' alt="2014 05 20 13 27 27 884" /></a> 
 <a href='https://postimg.org/image/hj19cscc1/' target='_blank'><img src='https://s24.postimg.org/hj19cscc1/2014_05_20_18_58_47_889.jpg' border='0' alt="2014 05 20 18 58 47 889" /></a> 
 <a href='https://postimg.org/image/4g5mtim41/' target='_blank'><img src='https://s24.postimg.org/4g5mtim41/2014_05_20_19_06_39_891.jpg' border='0' alt="2014 05 20 19 06 39 891" /></a> 
@@ -374,9 +528,9 @@
 <a href='https://postimg.org/image/yi4gwfssv/' target='_blank'><img src='https://s27.postimg.org/yi4gwfssv/2014_05_21_12_12_32_909.jpg' border='0' alt="2014 05 21 12 12 32 909" /></a> 
 <a href='https://postimg.org/image/oefr0ac27/' target='_blank'><img src='https://s27.postimg.org/oefr0ac27/2014_05_21_12_15_13_911.jpg' border='0' alt="2014 05 21 12 15 13 911" /></a> 
 <a href='https://postimg.org/image/my48i595b/' target='_blank'><img src='https://s27.postimg.org/my48i595b/2014_05_21_12_26_37_912.jpg' border='0' alt="2014 05 21 12 26 37 912" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/0l5lS0MMU2Q" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="0l5lS0MMU2Q" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/0l5lS0MMU2Q/0.jpg"></div></p>
 <a href='https://postimg.org/image/f7xgd06tr/' target='_blank'><img src='https://s27.postimg.org/f7xgd06tr/2014_05_21_15_48_42_921.jpg' border='0' alt="2014 05 21 15 48 42 921" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/RDAiXgi_Ktc" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="RDAiXgi_Ktc" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/RDAiXgi_Ktc/0.jpg"></div></p>
 <a href='https://postimg.org/image/wzdo57bm7/' target='_blank'><img src='https://s27.postimg.org/wzdo57bm7/2014_05_21_15_57_35_928.jpg' border='0' alt="2014 05 21 15 57 35 928" /></a> 
 <p>Приехали в местечко Флом, где находится знаменитая Фломская железная дорога, проходящая вдоль долины, очень живописная, по отзывам туристов. В бухте у причала как раз стоял огромный океанский лайнер, интересное зрелище для здешних мест.</p>
 <a href='https://postimg.org/image/vlm19wccv/' target='_blank'><img src='https://s27.postimg.org/vlm19wccv/2014_05_21_16_08_43_930.jpg' border='0' alt="2014 05 21 16 08 43 930" /></a> 
@@ -391,7 +545,7 @@
 <a href='https://postimg.org/image/dy8tpfrtb/' target='_blank'><img src='https://s27.postimg.org/dy8tpfrtb/2014_05_21_18_32_53_943.jpg' border='0' alt="2014 05 21 18 32 53 943" /></a> 
 <a href='https://postimg.org/image/9256xqrnz/' target='_blank'><img src='https://s27.postimg.org/9256xqrnz/2014_05_21_18_34_15_944.jpg' border='0' alt="2014 05 21 18 34 15 944" /></a> 
 <p>Решили сэкономить время и деньги, поэтому поехали вдоль долины на мотоцикле, и не пожалели. Фломская долина очень живописная! Огромные водопады, бурные реки, скалы, красота неописуемая!</p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/tJ5_PdlDdm4" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="tJ5_PdlDdm4" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/tJ5_PdlDdm4/0.jpg"></div></p>
 <a href='https://postimg.org/image/m7kp3uljj/' target='_blank'><img src='https://s27.postimg.org/m7kp3uljj/2014_05_21_18_57_10_951.jpg' border='0' alt="2014 05 21 18 57 10 951" /></a> 
 <a href='https://postimg.org/image/5xuj0yavj/' target='_blank'><img src='https://s27.postimg.org/5xuj0yavj/2014_05_21_18_58_02_953.jpg' border='0' alt="2014 05 21 18 58 02 953" /></a> 
 <a href='https://postimg.org/image/6d5stywsv/' target='_blank'><img src='https://s27.postimg.org/6d5stywsv/2014_05_21_19_04_37_957.jpg' border='0' alt="2014 05 21 19 04 37 957" /></a> 
@@ -424,7 +578,7 @@
 <a href='https://postimg.org/image/fhhzzn2j3/' target='_blank'><img src='https://s27.postimg.org/fhhzzn2j3/2014_05_21_21_30_25_1042.jpg' border='0' alt="2014 05 21 21 30 25 1042" /></a> 
 <p>Затем мы проехали по Лердальскому тоннелю, самому длинному в мире автомобильному тоннелю, длиной 24.5 километра! В нем есть три зала, разбивающие тоннель на 4 примерно равные части. Залы оборудованы оригинальной подсветкой.</p>
 <a href='https://postimg.org/image/hncau55zj/' target='_blank'><img src='https://s27.postimg.org/hncau55zj/2014_05_21_21_38_38_1049.jpg' border='0' alt="2014 05 21 21 38 38 1049" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/BZK0n5OQm0E" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="BZK0n5OQm0E" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/BZK0n5OQm0E/0.jpg"></div></p>
 <a href='https://postimg.org/image/gauls98jz/' target='_blank'><img src='https://s27.postimg.org/gauls98jz/2014_05_21_21_47_59_1054.jpg' border='0' alt="2014 05 21 21 47 59 1054" /></a> 
 <a href='https://postimg.org/image/ie50zx8cv/' target='_blank'><img src='https://s27.postimg.org/ie50zx8cv/2014_05_21_21_48_38_1056.jpg' border='0' alt="2014 05 21 21 48 38 1056" /></a> 
 <a href='https://postimg.org/image/nfh0f1573/' target='_blank'><img src='https://s27.postimg.org/nfh0f1573/2014_05_21_21_48_47_1057.jpg' border='0' alt="2014 05 21 21 48 47 1057" /></a> 
@@ -453,7 +607,7 @@
 <a href='https://postimg.org/image/nj23n6cun/' target='_blank'><img src='https://s27.postimg.org/nj23n6cun/2014_05_22_17_58_51_1114.jpg' border='0' alt="2014 05 22 17 58 51 1114" /></a> 
 <a href='https://postimg.org/image/ia72paufj/' target='_blank'><img src='https://s27.postimg.org/ia72paufj/2014_05_22_18_00_36_1116.jpg' border='0' alt="2014 05 22 18 00 36 1116" /></a> 
 <a href='https://postimg.org/image/69lmokn0v/' target='_blank'><img src='https://s27.postimg.org/69lmokn0v/2014_05_22_18_00_42_1117.jpg' border='0' alt="2014 05 22 18 00 42 1117" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/_WnE_cqhnTk" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="_WnE_cqhnTk" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/_WnE_cqhnTk/0.jpg"></div></p>
 <a href='https://postimg.org/image/6nmyo674f/' target='_blank'><img src='https://s27.postimg.org/6nmyo674f/2014_05_22_18_03_54_1119.jpg' border='0' alt="2014 05 22 18 03 54 1119" /></a> 
 <a href='https://postimg.org/image/ns49quf0v/' target='_blank'><img src='https://s27.postimg.org/ns49quf0v/2014_05_22_18_05_02_1120.jpg' border='0' alt="2014 05 22 18 05 02 1120" /></a> 
 <a href='https://postimg.org/image/eixi2zgr3/' target='_blank'><img src='https://s27.postimg.org/eixi2zgr3/2014_05_22_18_05_13_1121.jpg' border='0' alt="2014 05 22 18 05 13 1121" /></a> 
@@ -499,7 +653,7 @@
 <a href='https://postimg.org/image/s475rzjin/' target='_blank'><img src='https://s27.postimg.org/s475rzjin/2014_05_22_20_45_31_1220.jpg' border='0' alt="2014 05 22 20 45 31 1220" /></a> 
 <a href='https://postimg.org/image/6vthak51r/' target='_blank'><img src='https://s27.postimg.org/6vthak51r/2014_05_22_20_47_03_1225.jpg' border='0' alt="2014 05 22 20 47 03 1225" /></a> 
 <a href='https://postimg.org/image/hjx89ef0v/' target='_blank'><img src='https://s27.postimg.org/hjx89ef0v/2014_05_22_21_17_54_1231.jpg' border='0' alt="2014 05 22 21 17 54 1231" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/-hXWVDAHmsQ" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="-hXWVDAHmsQ" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/-hXWVDAHmsQ/0.jpg"></div></p>
 <a href='https://postimg.org/image/mjuohcknj/' target='_blank'><img src='https://s27.postimg.org/mjuohcknj/2014_05_22_21_20_52_1233.jpg' border='0' alt="2014 05 22 21 20 52 1233" /></a> 
 <a href='https://postimg.org/image/uf57w5ua7/' target='_blank'><img src='https://s27.postimg.org/uf57w5ua7/2014_05_22_21_24_09_1237.jpg' border='0' alt="2014 05 22 21 24 09 1237" /></a> 
 <a href='https://postimg.org/image/hqfiq8djj/' target='_blank'><img src='https://s27.postimg.org/hqfiq8djj/2014_05_22_21_24_22_1238.jpg' border='0' alt="2014 05 22 21 24 22 1238" /></a> 
@@ -507,13 +661,13 @@
 <a href='https://postimg.org/image/z2b9xxhn3/' target='_blank'><img src='https://s27.postimg.org/z2b9xxhn3/2014_05_22_21_51_01_1241.jpg' border='0' alt="2014 05 22 21 51 01 1241" /></a> 
 <a href='https://postimg.org/image/nfvrajjpr/' target='_blank'><img src='https://s27.postimg.org/nfvrajjpr/2014_05_22_21_59_10_1243.jpg' border='0' alt="2014 05 22 21 59 10 1243" /></a> 
 <a href='https://postimg.org/image/3x0csnzpr/' target='_blank'><img src='https://s27.postimg.org/3x0csnzpr/2014_05_22_22_01_31_1247.jpg' border='0' alt="2014 05 22 22 01 31 1247" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/1K4rYt7m8CI" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="1K4rYt7m8CI" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/1K4rYt7m8CI/0.jpg"></div></p>
 <a href='https://postimg.org/image/ki3dul1fz/' target='_blank'><img src='https://s27.postimg.org/ki3dul1fz/2014_05_22_22_13_02_1251.jpg' border='0' alt="2014 05 22 22 13 02 1251" /></a> 
 <a href='https://postimg.org/image/72gd54sy7/' target='_blank'><img src='https://s27.postimg.org/72gd54sy7/2014_05_22_22_13_48_1253.jpg' border='0' alt="2014 05 22 22 13 48 1253" /></a> 
 <a href='https://postimg.org/image/xh0ljuwsv/' target='_blank'><img src='https://s27.postimg.org/xh0ljuwsv/2014_05_22_22_15_39_1254.jpg' border='0' alt="2014 05 22 22 15 39 1254" /></a> 
 <a href='https://postimg.org/image/rp9o471qn/' target='_blank'><img src='https://s27.postimg.org/rp9o471qn/2014_05_22_22_19_21_1257.jpg' border='0' alt="2014 05 22 22 19 21 1257" /></a> 
 <a href='https://postimg.org/image/a1ioeid1r/' target='_blank'><img src='https://s27.postimg.org/a1ioeid1r/2014_05_22_22_20_05_1259.jpg' border='0' alt="2014 05 22 22 20 05 1259" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/CuA4FC6-V1I" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="CuA4FC6-V1I" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/CuA4FC6-V1I/0.jpg"></div></p>
 <p>Вообще дороги в Норвегии очень живописные и очень интересные в плане вождения мотоцикла, но местами очень опасные для неопытных водителей. Далее мы отправились к конечной точке нашего маршрута – Атлантической дороге, но туман и полночь остановили нас на ночлег. Завтра доедем.</p>
 <a href='https://postimg.org/image/434v49u33/' target='_blank'><img src='https://s27.postimg.org/434v49u33/2014_05_22_23_05_32_1264.jpg' border='0' alt="2014 05 22 23 05 32 1264" /></a> 
 <a href='https://postimg.org/image/qo4u1bvdb/' target='_blank'><img src='https://s27.postimg.org/qo4u1bvdb/2014_05_22_23_15_04_1273.jpg' border='0' alt="2014 05 22 23 15 04 1273" /></a> 
@@ -526,7 +680,7 @@
 <a href='https://postimg.org/image/4bh7xpedh/' target='_blank'><img src='https://s18.postimg.org/4bh7xpedh/2014_05_23_00_01_16_1286.jpg' border='0' alt="2014 05 23 00 01 16 1286" /></a> 
 <a href='https://postimg.org/image/6dd3y7myt/' target='_blank'><img src='https://s18.postimg.org/6dd3y7myt/2014_05_23_00_08_20_1287.jpg' border='0' alt="2014 05 23 00 08 20 1287" /></a> 
 <a href='https://postimg.org/image/vncgz1j45/' target='_blank'><img src='https://s18.postimg.org/vncgz1j45/2014_05_23_12_34_42_1290.jpg' border='0' alt="2014 05 23 12 34 42 1290" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/vrBEpuiIGLI" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="vrBEpuiIGLI" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/vrBEpuiIGLI/0.jpg"></div></p>
 <a href='https://postimg.org/image/h5f9r1rt1/' target='_blank'><img src='https://s18.postimg.org/h5f9r1rt1/2014_05_23_13_08_53_1295.jpg' border='0' alt="2014 05 23 13 08 53 1295" /></a> 
 <a href='https://postimg.org/image/5vmjw3mrp/' target='_blank'><img src='https://s18.postimg.org/5vmjw3mrp/2014_05_23_13_09_23_1297.jpg' border='0' alt="2014 05 23 13 09 23 1297" /></a> 
 <a href='https://postimg.org/image/t8klem2v9/' target='_blank'><img src='https://s18.postimg.org/t8klem2v9/2014_05_23_13_11_13_1301.jpg' border='0' alt="2014 05 23 13 11 13 1301" /></a> 
@@ -535,22 +689,22 @@
 <a href='https://postimg.org/image/3m30z337p/' target='_blank'><img src='https://s18.postimg.org/3m30z337p/2014_05_23_13_13_05_1310.jpg' border='0' alt="2014 05 23 13 13 05 1310" /></a> 
 <a href='https://postimg.org/image/lxp32hmh1/' target='_blank'><img src='https://s18.postimg.org/lxp32hmh1/2014_05_23_13_16_16_1315.jpg' border='0' alt="2014 05 23 13 16 16 1315" /></a> 
 <a href='https://postimg.org/image/mbqf236kl/' target='_blank'><img src='https://s18.postimg.org/mbqf236kl/2014_05_23_15_32_42_1316.jpg' border='0' alt="2014 05 23 15 32 42 1316" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/UFX9NDQxXdc" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="UFX9NDQxXdc" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/UFX9NDQxXdc/0.jpg"></div></p>
 <a href='https://postimg.org/image/yrrq9kpad/' target='_blank'><img src='https://s18.postimg.org/yrrq9kpad/2014_05_23_16_40_00_1320.jpg' border='0' alt="2014 05 23 16 40 00 1320" /></a> 
 <a href='https://postimg.org/image/rr3qgsnid/' target='_blank'><img src='https://s18.postimg.org/rr3qgsnid/2014_05_23_16_42_22_1321.jpg' border='0' alt="2014 05 23 16 42 22 1321" /></a> 
 <a href='https://postimg.org/image/5t79n08hx/' target='_blank'><img src='https://s18.postimg.org/5t79n08hx/2014_05_23_17_54_44_1326.jpg' border='0' alt="2014 05 23 17 54 44 1326" /></a>  
 <p>Поехали в сторону Осло, по пути заехали в Лилехамер, столицу зимних олимпийских игр 1994 года. Продвигались крайне медленно, т.к. весь день шел дождь, то слабее, то сильнее. Вечером, около 20:30, добрались до офиса паромной компании ColorLine в Осло, но все оказалось закрыто, а расписание паромов из Осло в Данию мы не нашли. Кстати, в Осло интересная сетей автомобильных тоннелей, которые прямо под землей соединяются и разъединяются. В общем, мы решили ехать в Кристиансанн, хотя до него 300 километров, но из него гарантированно будет паром в Данию в 8:30 утра. Да и вся ночь у нас впереди. Всю ночь льет дождь, мы то едем, то останавливаемся в местах отдыха, чтобы поесть и поспать по полчаса, и так до 5 утра.</p>
 <h2>24 мая</h2>
 <p>Мокрые, заспанные, но все-таки мы добрались до порта. В 6:30 должны открыться офисы по продаже билетов на паромы ColorLine и FjordLine. Ждем. До этого времени мы наблюдали, как сотни и сотни велосипедистов, разбившись на команды, начинали некую велогонку. Судя по рассказам местного байкера, сегодня «bike-day», а судя по символике, велогонку организовала паромная компания ColorLine. Все велосипеды исключительно шоссейные, никаких горных, много карбоновых. У нас еще оставалось врем до открытия офисов, и мы пошли прогуляться по центру Кристиансанна, старые улочки, деревянные дома, булыжные площади, прямо как в вестернах или фильмах про Холмса и Ватсона. В 6:30 мы купили билет на паром в Данию под названием ColorLine SuperSpeed. Он раз в пять больше FjordLine-Express, катамарана, на котором мы прибыли в Норвегию, и идет на час дольше, но мы решили и на нем прокатиться для разнообразия, тем более что нам нужен был офис по возврату НДС, а офис находился как раз на пароме. ColorLine SuperSpeed – это плавучий город. Магазины, рестораны, три нижних этажа для грузовиков, фур, автобусов и автомобилей, а всего 9 этажей, судя по лифтам. Этот паром идет со скоростью примерно 50км/ч, что тоже довольно прилично.</p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/Bjt4Qskn5iE" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="Bjt4Qskn5iE" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/Bjt4Qskn5iE/0.jpg"></div></p>
 <a href='https://postimg.org/image/ji6c0juyx/' target='_blank'><img src='https://s12.postimg.org/ji6c0juyx/2014_05_24_08_22_15_1330.jpg' border='0' alt="2014 05 24 08 22 15 1330" /></a> 
 <a href='https://postimg.org/image/4aqcg7349/' target='_blank'><img src='https://s12.postimg.org/4aqcg7349/2014_05_24_08_29_21_1331.jpg' border='0' alt="2014 05 24 08 29 21 1331" /></a> 
 <a href='https://postimg.org/image/5eags5nrd/' target='_blank'><img src='https://s12.postimg.org/5eags5nrd/2014_05_24_08_29_34_1332.jpg' border='0' alt="2014 05 24 08 29 34 1332" /></a> 
 <a href='https://postimg.org/image/bj1z5hfux/' target='_blank'><img src='https://s12.postimg.org/bj1z5hfux/2014_05_24_08_54_32_1337.jpg' border='0' alt="2014 05 24 08 54 32 1337" /></a> 
 <a href='https://postimg.org/image/5sbsrr7ux/' target='_blank'><img src='https://s12.postimg.org/5sbsrr7ux/2014_05_24_08_54_43_1338.jpg' border='0' alt="2014 05 24 08 54 43 1338" /></a> 
 <a href='https://postimg.org/image/7y63m9bbd/' target='_blank'><img src='https://s12.postimg.org/7y63m9bbd/2014_05_24_08_56_53_1344.jpg' border='0' alt="2014 05 24 08 56 53 1344" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/G-5gtiY43Ag" frameborder="0" allowfullscreen></iframe></p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/l8CExE_A6u4" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="G-5gtiY43Ag" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/G-5gtiY43Ag/0.jpg"></div></p>
+<p><div class="collageYoutube" id="l8CExE_A6u4" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/l8CExE_A6u4/0.jpg"></div></p>
 <a href='https://postimg.org/image/wh853kfpl/' target='_blank'><img src='https://s12.postimg.org/wh853kfpl/2014_05_24_09_08_42_1349.jpg' border='0' alt="2014 05 24 09 08 42 1349" /></a> 
 <a href='https://postimg.org/image/vszakmgzt/' target='_blank'><img src='https://s12.postimg.org/vszakmgzt/2014_05_24_09_11_43_1350.jpg' border='0' alt="2014 05 24 09 11 43 1350" /></a> 
 <a href='https://postimg.org/image/h0z6710g9/' target='_blank'><img src='https://s12.postimg.org/h0z6710g9/2014_05_24_12_06_39_1356.jpg' border='0' alt="2014 05 24 12 06 39 1356" /></a> 
@@ -560,12 +714,12 @@
 <a href='https://postimg.org/image/lbdu2m5jd/' target='_blank'><img src='https://s12.postimg.org/lbdu2m5jd/2014_05_24_13_22_52_1365.jpg' border='0' alt="2014 05 24 13 22 52 1365" /></a> 
 <a href='https://postimg.org/image/n4gqqxqq1/' target='_blank'><img src='https://s12.postimg.org/n4gqqxqq1/2014_05_24_15_10_39_1369.jpg' border='0' alt="2014 05 24 15 10 39 1369" /></a> 
 <a href='https://postimg.org/image/oks992tmx/' target='_blank'><img src='https://s12.postimg.org/oks992tmx/2014_05_24_17_05_18_1371.jpg' border='0' alt="2014 05 24 17 05 18 1371" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/kNY11oVAvqY" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="kNY11oVAvqY" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/kNY11oVAvqY/0.jpg"></div></p>
 <a href='https://postimg.org/image/om272hvgp/' target='_blank'><img src='https://s12.postimg.org/om272hvgp/2014_05_24_17_27_54_1378.jpg' border='0' alt="2014 05 24 17 27 54 1378" /></a> 
 <a href='https://postimg.org/image/swguy30jt/' target='_blank'><img src='https://s12.postimg.org/swguy30jt/2014_05_24_17_50_49_1388.jpg' border='0' alt="2014 05 24 17 50 49 1388" /></a>  
 <h2>25 мая</h2>
 <p>С утра сдали бутылки из под пива, т.к. за них возвращают деньги, и помчали в сторону дома. Погода отличная, поэтому мчимся на всех парах. Данию проехали очень быстро, т.к. по магистрали поток идет со скоростью 130-160км/ч. Но и бензин уходил существенно быстрее. По Германии решили ехать чуть медленнее.</p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/sW28WOKEWog" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="sW28WOKEWog" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/sW28WOKEWog/0.jpg"></div></p>
 <a href='https://postimg.org/image/skqjenq1j/' target='_blank'><img src='https://s23.postimg.org/skqjenq1j/2014_05_25_13_37_15_1392.jpg' border='0' alt="2014 05 25 13 37 15 1392" /></a> 
 <a href='https://postimg.org/image/js9kqz4wn/' target='_blank'><img src='https://s23.postimg.org/js9kqz4wn/2014_05_25_13_37_18_1393.jpg' border='0' alt="2014 05 25 13 37 18 1393" /></a> 
 <a href='https://postimg.org/image/725cdvwyf/' target='_blank'><img src='https://s23.postimg.org/725cdvwyf/2014_05_25_13_37_20_1394.jpg' border='0' alt="2014 05 25 13 37 20 1394" /></a> 
@@ -597,7 +751,7 @@
 <a href='https://postimg.org/image/y67tal0jp/' target='_blank'><img src='https://s18.postimg.org/y67tal0jp/2014_05_26_11_30_19_1435.jpg' border='0' alt="2014 05 26 11 30 19 1435" /></a> 
 <a href='https://postimg.org/image/5o8kag7id/' target='_blank'><img src='https://s18.postimg.org/5o8kag7id/2014_05_26_11_31_43_1436.jpg' border='0' alt="2014 05 26 11 31 43 1436" /></a> 
 <a href='https://postimg.org/image/bg8ohlhc5/' target='_blank'><img src='https://s18.postimg.org/bg8ohlhc5/2014_05_26_11_35_59_1437.jpg' border='0' alt="2014 05 26 11 35 59 1437" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/0i29WgKvUeo" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="0i29WgKvUeo" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/0i29WgKvUeo/0.jpg"></div></p>
 <a href='https://postimg.org/image/j7peg5lhh/' target='_blank'><img src='https://s18.postimg.org/j7peg5lhh/2014_05_26_12_00_20_1439.jpg' border='0' alt="2014 05 26 12 00 20 1439" /></a> 
 <a href='https://postimg.org/image/g78jzma6d/' target='_blank'><img src='https://s18.postimg.org/g78jzma6d/2014_05_26_12_04_32_1440.jpg' border='0' alt="2014 05 26 12 04 32 1440" /></a> 
 <a href='https://postimg.org/image/bdte8i32d/' target='_blank'><img src='https://s18.postimg.org/bdte8i32d/2014_05_26_15_09_29_1444.jpg' border='0' alt="2014 05 26 15 09 29 1444" /></a> 
@@ -613,7 +767,7 @@
 <h2>27 мая</h2>
 <p>Рядом, километрах в 50 находятся Шацкие озера, решили съездить. Устроились в пансионат, т.к. одежда и обувь абсолютно мокрые, нужно сушиться. Погода отличная, вода в озере теплая, купались, отдыхали. Уля связалась со своими родственниками в Луцке, нас пригласили погостить, завтра едем к ним.</p>
 <a href='https://postimg.org/image/pblsir2xl/' target='_blank'><img src='https://s4.postimg.org/pblsir2xl/2014_05_27_11_46_07_1461.jpg' border='0' alt="2014 05 27 11 46 07 1461" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/fn_vwDC4zrM" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="zWi91u2N7Dw" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/fn_vwDC4zrM/0.jpg"></div></p>
 <a href='https://postimg.org/image/uj6vn7jix/' target='_blank'><img src='https://s4.postimg.org/uj6vn7jix/2014_05_27_11_46_51_1464.jpg' border='0' alt="2014 05 27 11 46 51 1464" /></a> 
 <a href='https://postimg.org/image/qpdfe226x/' target='_blank'><img src='https://s4.postimg.org/qpdfe226x/2014_05_27_12_10_58_1465.jpg' border='0' alt="2014 05 27 12 10 58 1465" /></a> 
 <a href='https://postimg.org/image/hccu9xyft/' target='_blank'><img src='https://s4.postimg.org/hccu9xyft/2014_05_27_12_48_35_1467.jpg' border='0' alt="2014 05 27 12 48 35 1467" /></a> 
@@ -653,14 +807,14 @@
 <a href='https://postimg.org/image/5go8aucgf/' target='_blank'><img src='https://s27.postimg.org/5go8aucgf/2014_05_29_15_03_49_1532.jpg' border='0' alt="2014 05 29 15 03 49 1532" /></a> 
 <a href='https://postimg.org/image/xw3lo51u7/' target='_blank'><img src='https://s27.postimg.org/xw3lo51u7/2014_05_29_15_04_03_1534.jpg' border='0' alt="2014 05 29 15 04 03 1534" /></a> 
 <a href='https://postimg.org/image/4ein61j0v/' target='_blank'><img src='https://s27.postimg.org/4ein61j0v/2014_05_29_15_04_11_1535.jpg' border='0' alt="2014 05 29 15 04 11 1535" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/IvqtDx8wm5I" frameborder="0" allowfullscreen></iframe></p>
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/XA3Rt-Z10_c" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="IvqtDx8wm5I" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/IvqtDx8wm5I/0.jpg"></div></p>
+<p><div class="collageYoutube" id="XA3Rt-Z10_c" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/XA3Rt-Z10_c/0.jpg"></div></p>
 <a href='https://postimg.org/image/nol2bqfm7/' target='_blank'><img src='https://s27.postimg.org/nol2bqfm7/2014_05_29_15_08_14_1538.jpg' border='0' alt="2014 05 29 15 08 14 1538" /></a> 
 <a href='https://postimg.org/image/ekr8p13f3/' target='_blank'><img src='https://s27.postimg.org/ekr8p13f3/2014_05_29_15_08_29_1539.jpg' border='0' alt="2014 05 29 15 08 29 1539" /></a> 
 <a href='https://postimg.org/image/ml5jdikcv/' target='_blank'><img src='https://s27.postimg.org/ml5jdikcv/2014_05_29_15_08_34_1540.jpg' border='0' alt="2014 05 29 15 08 34 1540" /></a> 
 <a href='https://postimg.org/image/hwpjibv67/' target='_blank'><img src='https://s27.postimg.org/hwpjibv67/2014_05_29_15_08_48_1541.jpg' border='0' alt="2014 05 29 15 08 48 1541" /></a> 
 <a href='https://postimg.org/image/9fq17eqhb/' target='_blank'><img src='https://s27.postimg.org/9fq17eqhb/2014_05_29_15_09_51_1543.jpg' border='0' alt="2014 05 29 15 09 51 1543" /></a> 
-<p><iframe width="400" height="300" src="https://www.youtube.com/embed/xfv8nYXp1e0" frameborder="0" allowfullscreen></iframe></p>
+<p><div class="collageYoutube" id="xfv8nYXp1e0" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/xfv8nYXp1e0/0.jpg"></div></p>
 <a href='https://postimg.org/image/9i9wu8u4v/' target='_blank'><img src='https://s27.postimg.org/9i9wu8u4v/2014_05_29_15_20_17_1548.jpg' border='0' alt="2014 05 29 15 20 17 1548" /></a> 
 <a href='https://postimg.org/image/8u12bavf3/' target='_blank'><img src='https://s27.postimg.org/8u12bavf3/2014_05_29_15_20_21_1549.jpg' border='0' alt="2014 05 29 15 20 21 1549" /></a> 
 <a href='https://postimg.org/image/73mmnk39r/' target='_blank'><img src='https://s27.postimg.org/73mmnk39r/2014_05_29_15_21_28_1550.jpg' border='0' alt="2014 05 29 15 21 28 1550" /></a> 
