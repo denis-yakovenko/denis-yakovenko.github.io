@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
 /*var tag = document.createElement('script');
-tag.src = "http://www.youtube.com/player_api";
+tag.src = "https://www.youtube.com/player_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;*/
@@ -67,7 +67,7 @@ function isScrolledIntoView()
 		});
 	}*/
 var tag = document.createElement('script');
-tag.src = "http://www.youtube.com/player_api";
+tag.src = "https://www.youtube.com/player_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -128,14 +128,14 @@ function isScrolledIntoView() {
 		var elemTop = $(this).offset().top;
 		var elemBottom = elemTop + $(this).height();
 		
-		
+		/*
 		console.log(
 		" elemTop "+elemTop+
 		" elemBottom "+elemBottom+
 		" docViewTop "+docViewTop+
 		" docViewBottom "+docViewBottom+
 		""
-		);
+		);*/
 		
 		
 		
@@ -143,7 +143,7 @@ function isScrolledIntoView() {
 		if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop)){
 			//if ( paused == true ){currentlyPlaying.playVideo();paused = false; return;}
 			//currentlyPlaying = $(this).attr('id');
-			console.log("id: "+$(this).attr('id')+" className: "+$(this).className);
+			//console.log("id: "+$(this).attr('id')+" className: "+$(this).className);
 			if(myMap[$(this).attr('id')]==undefined)
 			loadPlayer($(this));
 			else
