@@ -12,73 +12,14 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
-/*var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/player_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;*/
-/*
-function onYouTubePlayerAPIReady() {
-    player = new YT.Player('ytplayer', {
-      height: '360',
-      width: '640',
-      videoId: 'M7lc1UVf-VE',
-      events: {
-        'onReady': function(){player.playVideo(); player.mute();}
-      }
-    });
-  }
-  */
- /* 
-function playThis(elem) {
-console.log(elem);
-    player = new YT.Player(elem.attr('id'), {
-      height: '270',
-      width: '480',
-      videoId: elem.attr('id'),
-      events: {
-        'onReady': function(){player.playVideo();}
-      }
-    });
-}
-function pauseThis(elem) {
-    if (player!=undefined) player.pauseVideo();
-}
-$(window).scroll(function() {
-	clearTimeout($.data(this, 'scrollTimer'));
-	$.data(this, 'scrollTimer', setTimeout(function() {
-		// do something
-		isScrolledIntoView();
-	}, 500));
-});
-function isScrolledIntoView()
-      {
-		$('.collageYoutube').each(function(){
-			var docViewTop = $(window).scrollTop();
-			var docViewBottom = docViewTop + $(window).height();
-			var elemTop = $(this).offset().top;
-			var elemBottom = elemTop + $(this).height();
-			if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
-			{
-				playThis($(this));
-			}else{
-				pauseThis($(this));
-			}
-		});
-	}*/
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/player_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 var currentlyPlaying;
 var playing = false;
 var paused = false;
-
 var myMap = new Object();
-
-
-
 function loadPlayer(elem) {
     var player = new YT.Player(elem.attr('id'), {
       height: '360',
@@ -86,75 +27,34 @@ function loadPlayer(elem) {
       videoId: elem.attr('id'),
       events: {
         'onReady': function(){
-			player.playVideo();
 			myMap[elem.attr('id')]=player;
+			player.playVideo();
 		}
       }
     });
 }
-
-
-
-function onYouTubeIframeAPIReady() {
-currentlyPlaying = new YT.Player(currentlyPlaying, {
-height: '270',
-      width: '480',
-	  videoId: currentlyPlaying/*,
-events: {
-'onReady': onPlayerReady
-}*/
-});
-}
-/*
-function onPlayerReady(event) {
-event.target.playVideo();
-}
-*/
 $(window).scroll(function() {
 clearTimeout($.data(this, 'scrollTimer'));
 $.data(this, 'scrollTimer', setTimeout(function() {
 isScrolledIntoView();
-}, 250));
+}, 0));
 });
-
-
-
-
-
 function isScrolledIntoView() {
 	$('.collageYoutube').each(function() {
 		var docViewTop = $(window).scrollTop();
 		var docViewBottom = docViewTop + $(window).height();
-		var elemTop = $(this).offset().top;
-		var elemBottom = elemTop + $(this).height();
-		
-		/*
-		console.log(
-		" elemTop "+elemTop+
-		" elemBottom "+elemBottom+
-		" docViewTop "+docViewTop+
-		" docViewBottom "+docViewBottom+
-		""
-		);*/
-		
-		
-		
-		
+		var elemTop = Math.round($(this).offset().top);
+		var elemBottom = Math.round(elemTop + $(this).height());
 		if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop)){
-			//if ( paused == true ){currentlyPlaying.playVideo();paused = false; return;}
-			//currentlyPlaying = $(this).attr('id');
-			//console.log("id: "+$(this).attr('id')+" className: "+$(this).className);
 			if(myMap[$(this).attr('id')]==undefined)
 			loadPlayer($(this));
 			else
 			myMap[$(this).attr('id')].playVideo();
-			//$(this).removeClass("collageYoutube");
-			//onYouTubeIframeAPIReady();
-			//playing = true;
 		}
 		else {
-			if(myMap[$(this).attr('id')]!=undefined)
+			if(myMap[$(this).attr('id')]!=undefined){
 				myMap[$(this).attr('id')].pauseVideo();
+			}
 		}
 	});
 }
@@ -767,7 +667,7 @@ function isScrolledIntoView() {
 <h2>27 мая</h2>
 <p>Рядом, километрах в 50 находятся Шацкие озера, решили съездить. Устроились в пансионат, т.к. одежда и обувь абсолютно мокрые, нужно сушиться. Погода отличная, вода в озере теплая, купались, отдыхали. Уля связалась со своими родственниками в Луцке, нас пригласили погостить, завтра едем к ним.</p>
 <a href='https://postimg.org/image/pblsir2xl/' target='_blank'><img src='https://s4.postimg.org/pblsir2xl/2014_05_27_11_46_07_1461.jpg' border='0' alt="2014 05 27 11 46 07 1461" /></a> 
-<p><div class="collageYoutube" id="zWi91u2N7Dw" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/fn_vwDC4zrM/0.jpg"></div></p>
+<p><div class="collageYoutube" id="fn_vwDC4zrM" onclick="loadPlayer($(this));"><img src="https://img.youtube.com/vi/fn_vwDC4zrM/0.jpg"></div></p>
 <a href='https://postimg.org/image/uj6vn7jix/' target='_blank'><img src='https://s4.postimg.org/uj6vn7jix/2014_05_27_11_46_51_1464.jpg' border='0' alt="2014 05 27 11 46 51 1464" /></a> 
 <a href='https://postimg.org/image/qpdfe226x/' target='_blank'><img src='https://s4.postimg.org/qpdfe226x/2014_05_27_12_10_58_1465.jpg' border='0' alt="2014 05 27 12 10 58 1465" /></a> 
 <a href='https://postimg.org/image/hccu9xyft/' target='_blank'><img src='https://s4.postimg.org/hccu9xyft/2014_05_27_12_48_35_1467.jpg' border='0' alt="2014 05 27 12 48 35 1467" /></a> 
